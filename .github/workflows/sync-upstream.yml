@@ -21,6 +21,19 @@ jobs:
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
           git remote add upstream https://github.com/pbs05/ponwrt.git
+          BEFORE=$(git rev-parse HEAD)
           git fetch upstream master
           git merge --no-edit upstream/master
           git push origin master
+          if [ "$BEFORE" != "$(git rev-parse HEAD)" ]; then
+            echo "NEW_CODE=1" >> "$GITHUB_ENV"
+          fi
+
+      - name: Trigger auto build
+        if: env.NEW_CODE == '1'
+        env:
+          GH_TOKEN: ${{ secrets.BUILD_TOKEN }}
+        run: |
+          gh workflow run release.yml \
+            -f tag=auto-$(date +%Y%m%d-%H%M) \
+            -f prerelease=true
