@@ -10,3 +10,4 @@ src-git pon_userspace https://github.com/pbs05/openwrt-pon-userspace.git
 #src-link custom /usr/src/openwrt/custom-feed
 src-git lucky https://github.com/gdy666/luci-app-lucky.git
 src-git gecoosac https://github.com/laipeng668/luci-app-gecoosac.git
+src-git airoha_npu https://github.com/rchen14b/luci-app-airoha-npu.git
